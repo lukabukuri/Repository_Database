@@ -33,6 +33,7 @@
 		ABCC406928DCD2B60014B7E6 /* ConstraintHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC406828DCD2B50014B7E6 /* ConstraintHelper.swift */; };
 		ABCC407128DCE5870014B7E6 /* Constants+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC407028DCE5870014B7E6 /* Constants+Keys.swift */; };
 		ABF6B49E28DEE6A50027BEE3 /* UIImageViewExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF6B49D28DEE6A50027BEE3 /* UIImageViewExtentions.swift */; };
+		ABF6B4A028DF20520027BEE3 /* UIViewControllerExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF6B49F28DF20520027BEE3 /* UIViewControllerExtentions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,7 @@
 		ABCC406828DCD2B50014B7E6 /* ConstraintHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstraintHelper.swift; sourceTree = "<group>"; };
 		ABCC407028DCE5870014B7E6 /* Constants+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Keys.swift"; sourceTree = "<group>"; };
 		ABF6B49D28DEE6A50027BEE3 /* UIImageViewExtentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExtentions.swift; sourceTree = "<group>"; };
+		ABF6B49F28DF20520027BEE3 /* UIViewControllerExtentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtentions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +160,7 @@
 				ABCC406328DCC4500014B7E6 /* UIColorExtensions.swift */,
 				AB8A3C1228DDD97D00FF6457 /* UITableViewExtentions.swift */,
 				ABF6B49D28DEE6A50027BEE3 /* UIImageViewExtentions.swift */,
+				ABF6B49F28DF20520027BEE3 /* UIViewControllerExtentions.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 				ABCC407128DCE5870014B7E6 /* Constants+Keys.swift in Sources */,
 				ABCC406428DCC4500014B7E6 /* UIColorExtensions.swift in Sources */,
 				ABCC405B28DCB6FD0014B7E6 /* Constants.swift in Sources */,
+				ABF6B4A028DF20520027BEE3 /* UIViewControllerExtentions.swift in Sources */,
 				ABCC403228DCAAE50014B7E6 /* AppDelegate.swift in Sources */,
 				AB8A3C0C28DDB97000FF6457 /* Constants+URL.swift in Sources */,
 				AB8A3C0F28DDBBCB00FF6457 /* Repository.swift in Sources */,

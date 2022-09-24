@@ -32,15 +32,15 @@ extension SearchInteractor: SearchBusinessLogic {
 
     func process(request: SearchModels.Request) {
         switch request {
-        case .searchRepositories(let text):
-            self.processSearchRepositories(with: text)
+        case .loadRepositories(let text, let isPagination, let PageNumber):
+            self.processSearchRepositories(with: text, isPagination: isPagination, pageNumber: PageNumber)
         }
     }
 
-    private func processSearchRepositories(with text: String) {
+    private func processSearchRepositories(with text: String, isPagination: Bool?, pageNumber: Int) {
         Task {
             do {
-                let repositories = try await self.worker.fetchUserRepositories(with: text)
+                let repositories = try await self.worker.fetchUserRepositories(with: text, pageNumber: pageNumber)
                 self.presenter.present(response: .fetchedRepositories(repositories))
             } catch {
                 self.presenter.present(response: .error(error))
@@ -48,7 +48,7 @@ extension SearchInteractor: SearchBusinessLogic {
         }
         
     }
-
+    
 }
 
 // MARK: - SearchDataStore implementation

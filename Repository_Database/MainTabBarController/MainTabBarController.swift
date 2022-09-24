@@ -22,7 +22,8 @@ final class MainTabBarController: UITabBarController {
         appearance.backgroundColor = .darkGray
         tabBar.backgroundColor = .darkGray
         self.tabBar.standardAppearance = appearance
-        self.tabBar.tintColor = .white        
+        self.tabBar.tintColor = .white
+        self.delegate = self
     }
     
     private func setupViewControllers() {
@@ -34,4 +35,15 @@ final class MainTabBarController: UITabBarController {
         ]
     }
     
+}
+// MARK: - UITabBarControllerDelegate Implementation
+extension MainTabBarController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        
+        if viewController === tabBarController.selectedViewController {
+            scrollToTop(view: viewController.view, navigationController: viewController as? CustomNavigationController)
+        }
+        
+        return true
+    }
 }

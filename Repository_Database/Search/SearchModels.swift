@@ -9,7 +9,7 @@
 enum SearchModels {
 
     enum Request {
-        case searchRepositories(with: String)
+        case loadRepositories(with: String, isPagination: Bool? = false, pageNumber: Int = 1)
     }
 
     enum Response {
@@ -18,7 +18,7 @@ enum SearchModels {
     }
 
     enum ViewModel {
-        case repositories([UserRepository])
+        case repositories([UserRepository], isFullyFetched: Bool)
         case error(Error)
     }
 

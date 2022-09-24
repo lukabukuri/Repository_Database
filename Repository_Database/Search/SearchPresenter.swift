@@ -34,7 +34,8 @@ extension SearchPresenter: SearchPresentationLogic {
     }
     
     private func presentRepositories(_ repositories: [UserRepository]) {
-        self.displayLogic?.display(viewModel: .repositories(repositories))
+        let isFullyFetched = repositories.isEmpty
+        self.displayLogic?.display(viewModel: .repositories(repositories, isFullyFetched: isFullyFetched))
     }
 
     private func present(error: Error) {

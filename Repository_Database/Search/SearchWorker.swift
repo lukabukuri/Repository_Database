@@ -8,24 +8,29 @@
 import Foundation
 
 protocol SearchWorker {
-    func fetchUserRepositories(with text: String) async throws -> [UserRepository]
+    func fetchUserRepositories(with userName: String, pageNumber: Int) async throws -> [UserRepository]
 }
 
 final class SearchDefaultWorker: SearchWorker {
     
-    func fetchUserRepositories(with text: String) async throws -> [UserRepository] {
+    func fetchUserRepositories(with userName: String, pageNumber: Int) async throws -> [UserRepository] {
         
-        let url = try constructURL(with: text)
+        let url = try constructURL(with: userName, pageNumber: pageNumber)
         return try await NetworkManager.shared.fetch(url: url)
     }
     
-    private func constructURL(with text: String) throws -> URL {
+}
+
+
+extension SearchDefaultWorker {
+    
+    private func constructURL(with userName: String, pageNumber: Int) throws -> URL {
         
         var urlComponents = URLComponents()
-        urlComponents.path = Keys.Paths.userRepositories(text: text)
+        urlComponents.path = Keys.Paths.userRepositories(text: userName)
         urlComponents.queryItems = [
-            URLQueryItem(name: Keys.QueryParams.page, value: "1"),
-            URLQueryItem(name: Keys.QueryParams.perPage, value: "10")
+            URLQueryItem(name: Keys.QueryParams.page, value: String(pageNumber)),
+            //URLQueryItem(name: Keys.QueryParams.perPage, value: "10")
         ]
         
         guard let path = urlComponents.url?.absoluteString,
@@ -33,10 +38,6 @@ final class SearchDefaultWorker: SearchWorker {
         
         return url
     }
-}
-
-
-extension SearchDefaultWorker {
     
     struct Keys {
         

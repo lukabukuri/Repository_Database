@@ -21,13 +21,44 @@ final class SearchViewController: UIViewController {
     private let searchController = UISearchController()
     private var searchTask: DispatchWorkItem?
     private var dataSource: [UserRepository] = []
+    private var currentPageNumber = 1
+    private var areAllRepositoriesFetched = false
+    private var isPaginngAlready = false
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.frame = view.bounds
         tableView.backgroundColor = .customBlack
+        tableView.separatorStyle = .singleLine
+        tableView.separatorColor = .darkGray
+        tableView.isScrollEnabled = false
+        tableView.keyboardDismissMode = .onDrag
         return tableView
         
+    }()
+    
+    private lazy var spinnerFooter: UIView = {
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
+        let spinner = UIActivityIndicatorView()
+        spinner.center = footerView.center
+        spinner.color = .white
+        footerView.addSubview(spinner)
+        spinner.startAnimating()
+        
+        return footerView
+    }()
+    
+    
+    private lazy var noMoreRepositoriesFooter: UIView = {
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 50))
+        footerView.center = label.center
+        label.textColor = .white
+        label.textAlignment = .center
+        label.text = "No More Repositories"
+        footerView.addSubview(label)
+        
+        return footerView
     }()
     
     // MARK: - Methods
@@ -49,7 +80,8 @@ final class SearchViewController: UIViewController {
     
     private func configureSearchBar() {
         searchController.hidesNavigationBarDuringPresentation = true
-        searchController.searchResultsUpdater = self
+        
+        searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
         if let textfield = searchController.searchBar.value(forKey: Constants.Keys.searchField) as? UITextField {
             textfield.textColor = .white
@@ -67,8 +99,6 @@ final class SearchViewController: UIViewController {
         view.addSubview(tableView)
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.separatorStyle = .singleLine
-        tableView.separatorColor = .darkGray
         tableView.registerClass(class: SearchRepositoriesTableViewCell.self)
         
     }
@@ -93,19 +123,23 @@ extension SearchViewController: SearchDisplayLogic {
 
     func display(viewModel: SearchModels.ViewModel) {
         switch viewModel {
-        case .repositories(let repositories):
-            self.display(repositories: repositories)
+        case .repositories(let repositories, let isFullyFetched):
+            self.display(repositories: repositories, isFullyFetched: isFullyFetched)
         case .error(let error):
             self.display(error: error)
         }
     }
     
-    private func display(repositories: [UserRepository]) {
-        self.dataSource = repositories
+    private func display(repositories: [UserRepository], isFullyFetched: Bool) {
+        self.dataSource += repositories
         DispatchQueue.main.async { [ weak self] in
             self?.tableView.reloadData()
+            self?.tableView.tableFooterView = nil
+            self?.tableView.isScrollEnabled = true
         }
         
+        self.areAllRepositoriesFetched = isFullyFetched
+        self.isPaginngAlready = false
     }
 
     private func display(error: Error) {
@@ -115,24 +149,41 @@ extension SearchViewController: SearchDisplayLogic {
 
 }
 
-// MARK: - UISearchResultsUpdating Implementation
-extension SearchViewController: UISearchResultsUpdating {
+// MARK: - UISearchBarDelegate Implementation
+extension SearchViewController: UISearchBarDelegate {
     
-    func updateSearchResults(for searchController: UISearchController) {
-        self.searchTask?.cancel()
-        if let text = searchController.searchBar.text, text.count > 0 {
-            
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        clearSearchedRepositories()
+        if searchText.count > 0 {
             let task = DispatchWorkItem { [weak self] in
-                self?.interactor.process(request: .searchRepositories(with: text))
+                self?.interactor.process(request: .loadRepositories(with: searchText))
             }
             self.searchTask = task
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.75, execute: task)
         }
-        
     }
     
-}
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        clearSearchedRepositories()
+    }
+    
+    private func clearSearchedRepositories() {
+        self.searchTask?.cancel()
+        self.dataSource.removeAll()
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.tableView.isScrollEnabled = false
+            self.tableView.tableFooterView = nil
+            self.tableView.reloadData()
+            self.tableView.setContentOffset(.zero, animated: false)
+            self.currentPageNumber = 1
+            
+        }
+    }
 
+    
+}
+// MARK: - UITableViewDataSource Implementation
 extension SearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource.count
@@ -147,6 +198,7 @@ extension SearchViewController: UITableViewDataSource {
     
 }
 
+// MARK: - UITableViewDelegate Implementation
 extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
@@ -154,5 +206,29 @@ extension SearchViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+}
+
+extension SearchViewController: UIScrollViewDelegate {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        
+        if (scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height && !areAllRepositoriesFetched && !isPaginngAlready {
+            if let text = searchController.searchBar.text {
+                currentPageNumber += 1
+                isPaginngAlready = true
+                
+                DispatchQueue.main.async { [weak self] in
+                    self?.tableView.tableFooterView = self?.spinnerFooter
+                }
+                self.interactor.process(request: .loadRepositories(with: text, isPagination: true, pageNumber: currentPageNumber))
+                
+            }
+        } else if (scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height && areAllRepositoriesFetched && !isPaginngAlready {
+            DispatchQueue.main.async { [weak self] in
+                self?.tableView.tableFooterView = self?.noMoreRepositoriesFooter
+            }
+        }
+        
     }
 }
