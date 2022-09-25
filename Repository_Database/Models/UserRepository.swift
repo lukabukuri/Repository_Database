@@ -11,6 +11,7 @@ struct UserRepository: Decodable {
     
     var repositoryName: String?
     var owner: Owner?
+    var image: Data?
     
     private enum CodingKeys: String, CodingKey {
         case repositoryName = "name", owner

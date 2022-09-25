@@ -58,6 +58,8 @@ class SearchRepositoriesTableViewCell: UITableViewCell {
         self.repositoryNameLabel.text = data.repositoryName
         if let avatarURL = data.owner?.avatarURL {
             self.avatarImageView.download(from: avatarURL)
+        } else if let imageData = data.image {
+            self.avatarImageView.image = UIImage(data: imageData)
         }
         
     }

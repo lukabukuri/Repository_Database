@@ -13,6 +13,7 @@ struct Repository: Decodable {
     var description: String?
     var dateCreated: String?
     var programmingLanguage: String?
+    var profileImage: Data?
     var owner: Owner?
     
     private enum CodingKeys: String, CodingKey {

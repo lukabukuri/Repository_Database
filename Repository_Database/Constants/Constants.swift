@@ -11,5 +11,6 @@ struct Constants {
     
     static let searchTitle = "Search"
     static let detailsTitle = "Details"
+    static let starredTitle = "Starred"
     
 }

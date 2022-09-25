@@ -7,39 +7,45 @@
 import Foundation
 
 protocol DetailsWorker {
-    func fetchRepository(userName: String, repositoryName: String) async throws -> Repository
+    func saveRepositoryInLocalStorage(repository: Repository?, completion: @escaping ((Bool) -> Void))
+    func removeRepositoryFromLocalStorage(repository: Repository?, completion: @escaping ((Bool) -> Void))
 }
 
 final class DetailsDefaultWorker: DetailsWorker {
     
-    func fetchRepository(userName: String, repositoryName: String) async throws -> Repository {
-        
-        let url = try constructURL(userName: userName, repositoryName: repositoryName)
-        return try await NetworkManager.shared.fetch(url: url)
-    }
-}
-
-
-extension DetailsDefaultWorker {
+    let persistentManager: PersistentManagerProtocol
     
-    private func constructURL(userName: String, repositoryName: String) throws -> URL {
-        
-        var urlComponents = URLComponents()
-        urlComponents.path = Keys.Endpoints.repository(userName: userName, repositoryName: repositoryName)
-        
-        guard let path = urlComponents.url?.absoluteString,
-              let url = URL(string: Constants.URL.baseURL + path) else { throw NetworkError.invalidURL }
-        
-        return url
+    init (persistentManager: PersistentManagerProtocol) {
+        self.persistentManager = persistentManager
     }
     
-    struct Keys {
+    func saveRepositoryInLocalStorage(repository: Repository?, completion: @escaping ((Bool) -> Void)) {
         
-        struct Endpoints {
-            static func repository(userName: String, repositoryName: String) -> String {
-                return "/repos/\(userName)/\(repositoryName)"
-            }
+        guard let repository else { completion(false); return }
+        
+        let repositoryEntity = RepositoryEntity(context: persistentManager.context)
+        repositoryEntity.name = repository.repositoryName
+        repositoryEntity.userName = repository.owner?.userName
+        repositoryEntity.programmingLanguage = repository.programmingLanguage
+        repositoryEntity.image = repository.profileImage
+        repositoryEntity.creationDate = repository.dateCreated
+        repositoryEntity.repositoryDescription = repository.description
+        persistentManager.create(with: repositoryEntity) { state in
+            completion(state)
         }
-
     }
+    
+    func removeRepositoryFromLocalStorage(repository: Repository?, completion: @escaping ((Bool) -> Void)) {
+        
+        guard let repositoryName = repository?.repositoryName else { completion(false); return }
+        
+        let repositoryEntity = RepositoryEntity(context: persistentManager.context)
+        persistentManager.delete(with: repositoryEntity, predicate: repositoryName) { state in
+            completion(state)
+        }
+    }
+
 }
+
+
+

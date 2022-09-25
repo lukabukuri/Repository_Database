@@ -79,7 +79,7 @@ final class DetailsViewController: UIViewController {
 
     private func setup() {
         let viewController = self
-        let worker = DetailsDefaultWorker()
+        let worker = DetailsDefaultWorker(persistentManager: PersistentManager())
         let presenter = DetailsPresenter(displayLogic: viewController)
         let interactor = DetailsInteractor(worker: worker, presenter: presenter)
         let router = DetailsRouter(viewController: viewController, dataStore: interactor)
@@ -131,7 +131,8 @@ final class DetailsViewController: UIViewController {
     }
     
     @objc private func saveButtonDidTap() {
-        }
+        interactor.process(request: .saveRepository(imageData: avatarImageView.image?.pngData()))
+    }
     
 }
 
@@ -140,6 +141,9 @@ extension DetailsViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+//        print(paths[0])
         
         self.configureUI()
         self.interactor.process(request: .viewDidLoad)
@@ -161,17 +165,26 @@ extension DetailsViewController: DetailsDisplayLogic {
 
     func display(viewModel: DetailsModels.ViewModel) {
         switch viewModel {
-        case .repository(let repository):
-            self.display(repository: repository)
+        case .repository(let repository, let isSavedInLocalStorage):
+            self.display(repository: repository, isSavedInLocalStorage)
+        case .didRepositorySave(let image):
+            self.display(buttonState: image)
         case .error(let error):
             self.display(error: error)
         }
     }
     
-    private func display(repository: Repository) {
+    private func display(repository: Repository, _ isSavedInLocalStorage: Bool) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            self.avatarImageView.download(from: repository.owner?.avatarURL ?? .empty)
+            
+            if isSavedInLocalStorage {
+                self.avatarImageView.image = UIImage(data: repository.profileImage ?? Data())
+                self.saveButton.setImage(UIImage(symbol: .starFill), for: .normal)
+            } else {
+                self.avatarImageView.download(from: repository.owner?.avatarURL ?? .empty)
+                self.saveButton.setImage(UIImage(symbol: .star), for: .normal)
+            }
             self.authorNameLabel.text = repository.owner?.userName
             self.repositoryNameLabel.text = repository.repositoryName
             self.programmingLanguageLabel.text?.append(repository.programmingLanguage ?? .empty)
@@ -180,6 +193,10 @@ extension DetailsViewController: DetailsDisplayLogic {
         }
     }
 
+    private func display(buttonState image: UIImage?) {
+        self.saveButton.setImage(image, for: .normal)
+    }
+    
     private func display(error: Error) {
 //        self.displayActivityIndicator(shouldDisplay: false)
 //        self.present(alert: CustomAlert(title: nil, message: error.localizedDescription, action: [.cancel(handler: nil)]))

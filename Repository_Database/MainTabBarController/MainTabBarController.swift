@@ -30,8 +30,12 @@ final class MainTabBarController: UITabBarController {
         let searchViewController = SearchFactory().make()
         searchViewController.tabBarItem = .init(title: Constants.searchTitle, image: .init(symbol: .magnifyingGlass), tag: 0)
         
+        let starredViewController = StarredFactory().make()
+        starredViewController.tabBarItem = .init(title: Constants.starredTitle, image: .init(symbol: .starFill), tag: 1)
+        
         self.viewControllers = [
-            CustomNavigationController(rootViewController: searchViewController)
+            CustomNavigationController(rootViewController: searchViewController),
+            CustomNavigationController(rootViewController: starredViewController)
         ]
     }
     

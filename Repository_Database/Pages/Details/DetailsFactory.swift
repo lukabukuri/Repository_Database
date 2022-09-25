@@ -8,10 +8,16 @@
 
 final class DetailsFactory {
 
-    func make(userName: String, repositoryName: String) -> DetailsViewController {
+    func make(userName: String? = nil, repositoryName: String? = nil, repository: Repository? = nil) -> DetailsViewController {
         let viewController = DetailsViewController.instantiate()
-        viewController.router.dataStore.repositoryName = repositoryName
-        viewController.router.dataStore.userName = userName
+        if let repository {
+            viewController.router.dataStore.repository = repository
+            viewController.router.dataStore.isRepositorySaved = true
+        } else {
+            viewController.router.dataStore.repositoryName = repositoryName
+            viewController.router.dataStore.userName = userName
+        }
+    
         
         return viewController
     }
