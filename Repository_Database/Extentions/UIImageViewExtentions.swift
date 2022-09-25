@@ -8,6 +8,7 @@
 import UIKit
 
 extension UIImageView {
+    
     func download(from url: URL, contentMode mode: ContentMode = .scaleAspectFit) {
         contentMode = mode
         URLSession.shared.dataTask(with: url) { data, response, error in
@@ -22,8 +23,17 @@ extension UIImageView {
             }
         }.resume()
     }
+    
     func download(from link: String, contentMode mode: ContentMode = .scaleAspectFit) {
         guard let url = URL(string: link) else { return }
         download(from: url, contentMode: mode)
+    }
+    
+    func makeRounded() {
+        layer.borderWidth = 1
+        layer.masksToBounds = false
+        layer.borderColor = UIColor.black.cgColor
+        layer.cornerRadius = self.frame.height / 2
+        clipsToBounds = true
     }
 }

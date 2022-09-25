@@ -10,4 +10,6 @@ import Foundation
 enum SFSymbol: String {
     
     case magnifyingGlass = "magnifyingglass"
+    case star = "star"
+    case starFill = "star.fill"
 }

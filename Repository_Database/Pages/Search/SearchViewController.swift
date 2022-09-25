@@ -23,7 +23,6 @@ final class SearchViewController: UIViewController {
     private var dataSource: [UserRepository] = []
     private var currentPageNumber = 1
     private var areAllRepositoriesFetched = false
-    private var isPaginngAlready = false
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -139,7 +138,6 @@ extension SearchViewController: SearchDisplayLogic {
         }
         
         self.areAllRepositoriesFetched = isFullyFetched
-        self.isPaginngAlready = false
     }
 
     private func display(error: Error) {
@@ -206,6 +204,9 @@ extension SearchViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let item = dataSource[indexPath.row]
+        guard let repositoryName = item.repositoryName, let userName = item.owner?.userName else { return }
+        router.navigate(to: .details(repositoryName: repositoryName, userName: userName))
     }
     
 }
@@ -213,10 +214,9 @@ extension SearchViewController: UITableViewDelegate {
 extension SearchViewController: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
-        if (scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height && !areAllRepositoriesFetched && !isPaginngAlready {
+        if (scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height && !dataSource.isEmpty && !areAllRepositoriesFetched {
             if let text = searchController.searchBar.text {
                 currentPageNumber += 1
-                isPaginngAlready = true
                 
                 DispatchQueue.main.async { [weak self] in
                     self?.tableView.tableFooterView = self?.spinnerFooter
@@ -224,7 +224,7 @@ extension SearchViewController: UIScrollViewDelegate {
                 self.interactor.process(request: .loadRepositories(with: text, isPagination: true, pageNumber: currentPageNumber))
                 
             }
-        } else if (scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height && areAllRepositoriesFetched && !isPaginngAlready {
+        } else if (scrollView.contentOffset.y + scrollView.frame.size.height) >= scrollView.contentSize.height && !dataSource.isEmpty && areAllRepositoriesFetched {
             DispatchQueue.main.async { [weak self] in
                 self?.tableView.tableFooterView = self?.noMoreRepositoriesFooter
             }

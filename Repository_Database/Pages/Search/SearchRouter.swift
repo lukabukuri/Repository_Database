@@ -7,6 +7,7 @@
 
 
 enum SearchRoutingDestination {
+    case details(repositoryName: String, userName: String)
 }
 
 protocol SearchRoutingLogic {
@@ -34,8 +35,17 @@ final class SearchRouter {
 extension SearchRouter: SearchRoutingLogic {
 
     func navigate(to destination: SearchRoutingDestination) {
-//        switch destination {
-//        }
+        switch destination {
+        case .details(let repositoryName, let userName):
+            self.navigateToDetails(with: repositoryName, userName: userName)
+        }
+    }
+    
+    private func navigateToDetails(with repositoryName: String, userName: String) {
+        guard let navigationController = viewController?.navigationController else { return }
+        let detailsViewController = DetailsFactory().make(userName: userName, repositoryName: repositoryName)
+        
+        navigationController.pushViewController(detailsViewController, animated: true)
     }
 
 }

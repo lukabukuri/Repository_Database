@@ -27,7 +27,7 @@ extension SearchDefaultWorker {
     private func constructURL(with userName: String, pageNumber: Int) throws -> URL {
         
         var urlComponents = URLComponents()
-        urlComponents.path = Keys.Paths.userRepositories(text: userName)
+        urlComponents.path = Keys.Endpoints.userRepositories(text: userName)
         urlComponents.queryItems = [
             URLQueryItem(name: Keys.QueryParams.page, value: String(pageNumber)),
             //URLQueryItem(name: Keys.QueryParams.perPage, value: "10")
@@ -41,7 +41,7 @@ extension SearchDefaultWorker {
     
     struct Keys {
         
-        struct Paths {
+        struct Endpoints {
             static func userRepositories(text: String) -> String {
                 return "/users/\(text)/repos"
             }

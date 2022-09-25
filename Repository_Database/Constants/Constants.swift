@@ -10,5 +10,6 @@ import UIKit
 struct Constants {
     
     static let searchTitle = "Search"
+    static let detailsTitle = "Details"
     
 }

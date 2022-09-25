@@ -9,13 +9,14 @@ import Foundation
 
 struct Repository: Decodable {
     
-    var name: String?
+    var repositoryName: String?
     var description: String?
-    var created_at: String?
-    var language: String?
+    var dateCreated: String?
+    var programmingLanguage: String?
+    var owner: Owner?
     
     private enum CodingKeys: String, CodingKey {
-        case name = "repositoryName", description, created_at = "dateCreated", language = "programmingLanguage"
+        case repositoryName = "name", description, dateCreated = "created_at", programmingLanguage = "language", owner
     }
     
 }
