@@ -22,7 +22,6 @@ final class StarredViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.frame = view.bounds
         tableView.backgroundColor = .customBlack
         tableView.separatorStyle = .singleLine
         tableView.separatorColor = .darkGray
@@ -77,6 +76,11 @@ extension StarredViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.interactor.process(request: .viewDidLoad)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.frame = view.bounds
     }
 
 }

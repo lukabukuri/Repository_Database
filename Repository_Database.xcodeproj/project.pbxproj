@@ -27,6 +27,8 @@
 		AB9749CE28E06D25002C63B1 /* StarredModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9749C628E06D25002C63B1 /* StarredModels.swift */; };
 		AB9749CF28E06D25002C63B1 /* StarredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9749C728E06D25002C63B1 /* StarredViewController.swift */; };
 		AB9749D028E06D25002C63B1 /* StarredInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9749C828E06D25002C63B1 /* StarredInteractor.swift */; };
+		ABB7A11F28E0921900921E62 /* DetailsPageConstraintHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB7A11E28E0921900921E62 /* DetailsPageConstraintHelper.swift */; };
+		ABB7A12128E0B3BB00921E62 /* UIDeviceExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB7A12028E0B3BB00921E62 /* UIDeviceExtentions.swift */; };
 		ABCC403228DCAAE50014B7E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC403128DCAAE50014B7E6 /* AppDelegate.swift */; };
 		ABCC403428DCAAE50014B7E6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC403328DCAAE50014B7E6 /* SceneDelegate.swift */; };
 		ABCC403B28DCAAE50014B7E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABCC403A28DCAAE50014B7E6 /* Assets.xcassets */; };
@@ -78,6 +80,8 @@
 		AB9749C628E06D25002C63B1 /* StarredModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarredModels.swift; sourceTree = "<group>"; };
 		AB9749C728E06D25002C63B1 /* StarredViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarredViewController.swift; sourceTree = "<group>"; };
 		AB9749C828E06D25002C63B1 /* StarredInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarredInteractor.swift; sourceTree = "<group>"; };
+		ABB7A11E28E0921900921E62 /* DetailsPageConstraintHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsPageConstraintHelper.swift; sourceTree = "<group>"; };
+		ABB7A12028E0B3BB00921E62 /* UIDeviceExtentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtentions.swift; sourceTree = "<group>"; };
 		ABCC402E28DCAAE50014B7E6 /* Repository_Database.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Repository_Database.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABCC403128DCAAE50014B7E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ABCC403328DCAAE50014B7E6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -230,6 +234,7 @@
 				ABF6B49D28DEE6A50027BEE3 /* UIImageViewExtentions.swift */,
 				ABF6B49F28DF20520027BEE3 /* UIViewControllerExtentions.swift */,
 				AB02949428DF68AF0071402A /* StringExtentions.swift */,
+				ABB7A12028E0B3BB00921E62 /* UIDeviceExtentions.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -317,6 +322,7 @@
 				ABF6B4A628DF45530027BEE3 /* DetailsRouter.swift */,
 				ABF6B4A728DF45530027BEE3 /* DetailsModels.swift */,
 				ABF6B4A328DF45530027BEE3 /* DetailsFactory.swift */,
+				ABB7A11E28E0921900921E62 /* DetailsPageConstraintHelper.swift */,
 			);
 			path = Details;
 			sourceTree = "<group>";
@@ -404,8 +410,10 @@
 				ABF6B4AF28DF45530027BEE3 /* DetailsModels.swift in Sources */,
 				AB02949528DF68AF0071402A /* StringExtentions.swift in Sources */,
 				AB9749CA28E06D25002C63B1 /* StarredFactory.swift in Sources */,
+				ABB7A12128E0B3BB00921E62 /* UIDeviceExtentions.swift in Sources */,
 				ABCC403228DCAAE50014B7E6 /* AppDelegate.swift in Sources */,
 				AB8A3C0C28DDB97000FF6457 /* Constants+URL.swift in Sources */,
+				ABB7A11F28E0921900921E62 /* DetailsPageConstraintHelper.swift in Sources */,
 				AB9749B928E03F4E002C63B1 /* RepositoryModel.xcdatamodeld in Sources */,
 				AB8A3C0F28DDBBCB00FF6457 /* Repository.swift in Sources */,
 				ABCC405428DCB5730014B7E6 /* SearchPresenter.swift in Sources */,

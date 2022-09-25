@@ -29,8 +29,7 @@ extension SearchDefaultWorker {
         var urlComponents = URLComponents()
         urlComponents.path = Keys.Endpoints.userRepositories(text: userName)
         urlComponents.queryItems = [
-            URLQueryItem(name: Keys.QueryParams.page, value: String(pageNumber)),
-            //URLQueryItem(name: Keys.QueryParams.perPage, value: "10")
+            URLQueryItem(name: Keys.QueryParams.page, value: String(pageNumber))
         ]
         
         guard let path = urlComponents.url?.absoluteString,

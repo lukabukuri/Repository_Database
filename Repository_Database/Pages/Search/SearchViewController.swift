@@ -26,7 +26,6 @@ final class SearchViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.frame = view.bounds
         tableView.backgroundColor = .customBlack
         tableView.separatorStyle = .singleLine
         tableView.separatorColor = .darkGray
@@ -115,6 +114,10 @@ extension SearchViewController {
        
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.frame = view.bounds
+    }
 }
 
 // MARK: - SearchDisplayLogic

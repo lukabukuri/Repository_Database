@@ -27,6 +27,7 @@ final class DetailsViewController: UIViewController {
         let authorNameLabel = UILabel()
         authorNameLabel.textColor = .lightGray
         authorNameLabel.font = UIFont.systemFont(ofSize: 15)
+        authorNameLabel.clipsToBounds = true
         return authorNameLabel
     }()
     
@@ -40,7 +41,7 @@ final class DetailsViewController: UIViewController {
     private lazy var programmingLanguageLabel: UILabel = {
        let programmingLanguageLabel = UILabel()
         programmingLanguageLabel.textColor = .white
-        programmingLanguageLabel.text = "Programming Language:\(String.largeSpace)"
+        
         return programmingLanguageLabel
     }()
     
@@ -55,6 +56,7 @@ final class DetailsViewController: UIViewController {
        let descriptionLabel = UILabel()
         descriptionLabel.textColor = .white
         descriptionLabel.numberOfLines = 3
+        descriptionLabel.textAlignment = .center
         return descriptionLabel
     }()
     
@@ -91,43 +93,48 @@ final class DetailsViewController: UIViewController {
     private func configureUI() {
         view.backgroundColor = .customBlack
         navigationItem.title = Constants.detailsTitle
+
+    }
+    
+    private func makeConstraints() {
         
+        NSLayoutConstraint.deactivate(self.view.constraints)
         
         avatarImageView.constrain(with: view, addAsSubview: true)
-            .setConstantHeight(100)
-            .setConstantWidth(100)
-            .myTopWithItsTop(180)
+            .setConstantHeight(DetailsPageConstraintHelper.avatarImageViewHeight)
+            .setConstantWidth(DetailsPageConstraintHelper.avatarImageViewWidth)
+            .myTopWithItsTop(DetailsPageConstraintHelper.avatarImageViewTop)
             .equalItscenterX()
         
         authorNameLabel.constrain(with: view, addAsSubview: true)
-            .myTopWithItsTop(290)
+            .myTopWithItsTop(DetailsPageConstraintHelper.authorLabelTop)
             .equalItscenterX()
         
         repositoryNameLabel.constrain(with: view, addAsSubview: true)
-            .myLeftWithItsLeft(20)
-            .myRightWithItsRight(10)
-            .myTopWithItsTop(350)
-        
+            .myLeftWithItsLeft(DetailsPageConstraintHelper.repositoryNameLabelLeft)
+            .myRightWithItsRight(DetailsPageConstraintHelper.repositoryNameLabelRight)
+            .myTopWithItsTop(DetailsPageConstraintHelper.repositoryNameLabelTop)
+
         programmingLanguageLabel.constrain(with: view, addAsSubview: true)
-            .myLeftWithItsLeft(20)
-            .myTopWithItsTop(390)
-        
+            .myLeftWithItsLeft(DetailsPageConstraintHelper.programmingLanguageLabelLeft)
+            .myTopWithItsTop(DetailsPageConstraintHelper.programmingLanguageLabelTop)
+
         dateLabel.constrain(with: view, addAsSubview: true)
-            .myLeftWithItsLeft(20)
-            .myTopWithItsTop(430)
-        
+            .myLeftWithItsLeft(DetailsPageConstraintHelper.dateLabelLeft)
+            .myTopWithItsTop(DetailsPageConstraintHelper.dateLabelTop)
+
         descriptionLabel.constrain(with: view, addAsSubview: true)
-            .myLeftWithItsLeft(20)
-            .myRightWithItsRight(20)
-            .myTopWithItsTop(480)
-        
-        saveButton.constrain(with: view, addAsSubview: true)
-            .setConstantHeight(60)
-            .setConstantWidth(60)
-            .myBottomWithItsBottom(150)
-            .equalItscenterX()
+            .myLeftWithItsLeft(DetailsPageConstraintHelper.descriptionLabelLeft)
+            .myRightWithItsRight(DetailsPageConstraintHelper.descriptionLabelRight)
+            .myTopWithItsTop(DetailsPageConstraintHelper.descriptionLabelTop)
+            .setConstantHeight(50)
             
-        
+            
+        saveButton.constrain(with: view, addAsSubview: true)
+            .setConstantHeight(DetailsPageConstraintHelper.saveButtonHeight)
+            .setConstantWidth(DetailsPageConstraintHelper.saveButtonWidth)
+            .myTopWithItsTop(DetailsPageConstraintHelper.saveButtonTop)
+            .equalItscenterX()
     }
     
     @objc private func saveButtonDidTap() {
@@ -146,6 +153,7 @@ extension DetailsViewController {
 //        print(paths[0])
         
         self.configureUI()
+        self.makeConstraints()
         self.interactor.process(request: .viewDidLoad)
     }
 
@@ -156,6 +164,11 @@ extension DetailsViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         avatarImageView.makeRounded()
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        makeConstraints()
     }
 
 }
@@ -187,7 +200,7 @@ extension DetailsViewController: DetailsDisplayLogic {
             }
             self.authorNameLabel.text = repository.owner?.userName
             self.repositoryNameLabel.text = repository.repositoryName
-            self.programmingLanguageLabel.text?.append(repository.programmingLanguage ?? .empty)
+            self.programmingLanguageLabel.text = repository.programmingLanguage ?? .empty
             self.dateLabel.text?.append(repository.dateCreated?.convertISODateToString() ?? .empty)
             self.descriptionLabel.text = repository.description
         }
@@ -200,6 +213,7 @@ extension DetailsViewController: DetailsDisplayLogic {
     private func display(error: Error) {
 //        self.displayActivityIndicator(shouldDisplay: false)
 //        self.present(alert: CustomAlert(title: nil, message: error.localizedDescription, action: [.cancel(handler: nil)]))
+        
     }
 
 }
