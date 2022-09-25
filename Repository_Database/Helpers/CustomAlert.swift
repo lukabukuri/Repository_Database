@@ -28,14 +28,12 @@ enum AlertActions {
     
     case yes(handler: (() -> Void)?)
     case no(handler: (() -> Void)?)
-    case cancel(handler: (() -> Void)?)
     
     
     private var title: String? {
         switch self {
-            case .yes: return "Yes"
-            case .no: return "No"
-            case.cancel: return "Cancel"
+        case .yes: return "Yes".localized()
+        case .no: return "No".localized()
         }
     }
     
@@ -43,7 +41,6 @@ enum AlertActions {
         switch self {
         case .yes(let handler): return handler
         case .no(let handler): return handler
-        case .cancel(let handler): return handler
         }
     }
     

@@ -9,18 +9,37 @@ import UIKit
 
 struct Constants {
     
-    static let searchTitle = "Search"
-    static let detailsTitle = "Details"
-    static let starredTitle = "Starred"
+    static var searchTitle: String {
+        "SearchTitle".localized()
+    }
+    static var detailsTitle: String {
+        "DetailsTitle".localized()
+    }
+    static var starredTitle: String {
+        "StarredTitle".localized()
+    }
     
 }
 
 
 extension Constants {
     
-    static let noInternet = "No Internet Connection"
-    static let userDoesNotExist = "User does not exist"
-    
-    static let searchRepositories = "Search Repositories"
-    static let noStarredRepositories = "You have no starred Repositories"
+    static var noInternet: String {
+        "NoInternetConnection".localized()
+    }
+    static var userDoesNotExist: String {
+        "UserDoesNotExist".localized()
+    }
+    static var searchRepositories: String {
+        "SearchRepositories".localized()
+    }
+    static var noStarredRepositories: String {
+        "NoStarredRepositories".localized()
+    }
+    static var askingForAppLanguageChange: String {
+        "AskingForAppLanguageChange".localized()
+    }
+    static var askingForSaveRepository: String {
+        "AskingForSaveRepository".localized()
+    }
 }

@@ -59,18 +59,7 @@ final class DetailsViewController: UIViewController {
         descriptionLabel.textAlignment = .center
         return descriptionLabel
     }()
-    
-    private lazy var saveButton: UIButton = {
-        let saveButton = UIButton(type: .system)
-        saveButton.tintColor = .white
-        saveButton.setImage(.init(symbol: .star), for: .normal)
-        saveButton.contentHorizontalAlignment = .fill
-        saveButton.contentVerticalAlignment = .fill
-        saveButton.addTarget(self, action: #selector(saveButtonDidTap), for: .touchUpInside)
-        return saveButton
-    }()
-    
-    
+
 
     // MARK: - Setup Methods
     static func instantiate() -> DetailsViewController {
@@ -93,7 +82,7 @@ final class DetailsViewController: UIViewController {
     private func configureUI() {
         view.backgroundColor = .customBlack
         navigationItem.title = Constants.detailsTitle
-
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(symbol: .star), style: .done, target: self, action: #selector(saveButtonDidTap))
     }
     
     private func makeConstraints() {
@@ -127,18 +116,14 @@ final class DetailsViewController: UIViewController {
             .myLeftWithItsLeft(DetailsPageConstraintHelper.descriptionLabelLeft)
             .myRightWithItsRight(DetailsPageConstraintHelper.descriptionLabelRight)
             .myTopWithItsTop(DetailsPageConstraintHelper.descriptionLabelTop)
-            .setConstantHeight(50)
-            
-            
-        saveButton.constrain(with: view, addAsSubview: true)
-            .setConstantHeight(DetailsPageConstraintHelper.saveButtonHeight)
-            .setConstantWidth(DetailsPageConstraintHelper.saveButtonWidth)
-            .myTopWithItsTop(DetailsPageConstraintHelper.saveButtonTop)
-            .equalItscenterX()
+
     }
     
     @objc private func saveButtonDidTap() {
-        interactor.process(request: .saveRepository(imageData: avatarImageView.image?.pngData()))
+        self.presentAlert(title: nil, message: Constants.askingForSaveRepository, actions: [
+            .no(handler: nil), .yes(handler: { [weak self] in
+                self?.interactor.process(request: .saveRepository(imageData: self?.avatarImageView.image?.pngData()))
+            })])
     }
     
 }
@@ -190,10 +175,10 @@ extension DetailsViewController: DetailsDisplayLogic {
             
             if isSavedInLocalStorage {
                 self.avatarImageView.image = UIImage(data: repository.profileImage ?? Data())
-                self.saveButton.setImage(UIImage(symbol: .starFill), for: .normal)
+                self.navigationItem.rightBarButtonItem?.image = UIImage(symbol: .starFill)
             } else {
                 self.avatarImageView.download(from: repository.owner?.avatarURL ?? .empty)
-                self.saveButton.setImage(UIImage(symbol: .star), for: .normal)
+                self.navigationItem.rightBarButtonItem?.image = UIImage(symbol: .star)
             }
             self.authorNameLabel.text = repository.owner?.userName
             self.repositoryNameLabel.text = repository.repositoryName
@@ -204,7 +189,7 @@ extension DetailsViewController: DetailsDisplayLogic {
     }
 
     private func display(buttonState image: UIImage?) {
-        self.saveButton.setImage(image, for: .normal)
+        self.navigationItem.rightBarButtonItem?.image = image
     }
     
     private func display(error: Error) {

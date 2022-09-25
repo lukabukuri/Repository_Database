@@ -1,0 +1,26 @@
+/* 
+  Localizable.strings
+  Repository_Database
+
+  Created by Luka Bukuri on 26.09.22.
+  
+*/
+
+// MARK: - General
+"Yes" = "Yes";
+"No" = "No";
+
+// MARK: - Page Titles
+"SearchTitle" = "Search";
+"DetailsTitle" = "Details";
+"StarredTitle" = "Starred";
+
+// MARK: - Place Holders
+"NoInternetConnection" = "No Internet Connection";
+"UserDoesNotExist" = "User does not exist";
+"SearchRepositories" = "Search Repositories";
+"NoStarredRepositories" = "You have no starred Repositories";
+
+// MARK: - Alerts
+"AskingForAppLanguageChange" = "Do you want to change app language?";
+"AskingForSaveRepository" = "Do you want to save/unsave repository?";

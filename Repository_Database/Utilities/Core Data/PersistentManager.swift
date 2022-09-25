@@ -56,10 +56,8 @@ final class PersistentManager: PersistentManagerProtocol {
                 context.delete(object)
             }
             try context.save()
-            print("Record Deleted")
             completion(true)
         } catch {
-            print(error)
             completion(false)
         }
     }

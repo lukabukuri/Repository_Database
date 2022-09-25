@@ -9,6 +9,8 @@ import UIKit
 
 final class MainTabBarController: UITabBarController {
     
+    private var counterForAppLanguageOffer = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -16,6 +18,7 @@ final class MainTabBarController: UITabBarController {
         self.setupViewControllers()
     }
     
+    // MARK: - Private Methods
     private func configureTabBar() {
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
@@ -39,15 +42,35 @@ final class MainTabBarController: UITabBarController {
         ]
     }
     
+    @objc private func changeLanguage() {
+        let targetLanguage = Language.allCases.first { $0.rawValue != Locale.preferredLanguages.first }
+        guard let language = targetLanguage?.rawValue else { return }
+        UserDefaults.standard.set([language], forKey: "AppleLanguages")
+        UserDefaults.standard.synchronize()
+        Bundle.setLanguage(language)
+        self.tabBar.window?.rootViewController = MainTabBarController()
+    }
+    
 }
+
+
 // MARK: - UITabBarControllerDelegate Implementation
 extension MainTabBarController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        
         if viewController === tabBarController.selectedViewController {
             scrollToTop(view: viewController.view, navigationController: viewController as? CustomNavigationController)
+            
+            // MARK: - ⚠️ Press tab bar item 5 times to change the language
+            counterForAppLanguageOffer += 1
+            if counterForAppLanguageOffer % 5 == 0 {
+                self.presentAlert(title: nil, message: Constants.askingForAppLanguageChange, actions: [
+                    .no(handler: nil), .yes(handler: { [weak self] in
+                        self?.changeLanguage()
+                    })])
+            }
+        } else {
+            counterForAppLanguageOffer = 0
         }
-        
         return true
     }
 }
