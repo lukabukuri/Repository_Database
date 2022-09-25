@@ -12,11 +12,11 @@ protocol SearchDisplayLogic: AnyObject {
 }
 
 final class SearchViewController: UIViewController {
-
+    
     // MARK: - Public Properties
     var interactor: SearchBusinessLogic!
     var router: (SearchRoutingLogic & SearchDataPassing)!
-
+    
     // MARK: - Private Properties
     private let searchController = UISearchController()
     private var searchTask: DispatchWorkItem?
@@ -100,20 +100,20 @@ final class SearchViewController: UIViewController {
         tableView.registerClass(class: SearchRepositoriesTableViewCell.self)
         
     }
-
+    
 }
 
 // MARK: - Lifecycle
 extension SearchViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         self.configureUI()
         self.setupTableView()
-       
+        tableView.defaultPlaceHolder(show: true, status: (DefaultPlaceHolder.emptySearch) as CustomPlaceHolder)
     }
-
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.frame = view.bounds
@@ -122,7 +122,7 @@ extension SearchViewController {
 
 // MARK: - SearchDisplayLogic
 extension SearchViewController: SearchDisplayLogic {
-
+    
     func display(viewModel: SearchModels.ViewModel) {
         switch viewModel {
         case .repositories(let repositories, let isFullyFetched):
@@ -142,12 +142,21 @@ extension SearchViewController: SearchDisplayLogic {
         
         self.areAllRepositoriesFetched = isFullyFetched
     }
-
+    
     private func display(error: Error) {
-//        self.displayActivityIndicator(shouldDisplay: false)
-//        self.present(alert: CustomAlert(title: nil, message: error.localizedDescription, action: [.cancel(handler: nil)]))
+        guard let error = error as? NetworkError else { return }
+        switch error {
+        case .badResponse:
+            if dataSource.isEmpty {
+                self.tableView.defaultPlaceHolder(show: true, status: error)
+            }
+        case .noInternet:
+            self.tableView.defaultPlaceHolder(show: true, status: error)
+        default:
+            break
+        }
     }
-
+    
 }
 
 // MARK: - UISearchBarDelegate Implementation
@@ -156,16 +165,20 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         clearSearchedRepositories()
         if searchText.count > 0 {
+            tableView.defaultPlaceHolder(show: false)
             let task = DispatchWorkItem { [weak self] in
                 self?.interactor.process(request: .loadRepositories(with: searchText))
             }
             self.searchTask = task
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.75, execute: task)
+        } else if searchText.count == 0, dataSource.isEmpty {
+                self.tableView.defaultPlaceHolder(show: true, status: (DefaultPlaceHolder.emptySearch) as CustomPlaceHolder)
         }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         clearSearchedRepositories()
+        self.tableView.defaultPlaceHolder(show: true, status: (DefaultPlaceHolder.emptySearch) as CustomPlaceHolder)
     }
     
     private func clearSearchedRepositories() {
@@ -181,7 +194,7 @@ extension SearchViewController: UISearchBarDelegate {
             
         }
     }
-
+    
     
 }
 // MARK: - UITableViewDataSource Implementation

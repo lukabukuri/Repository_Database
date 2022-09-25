@@ -19,7 +19,6 @@
 		AB9749BB28E04034002C63B1 /* BasePersistentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9749BA28E04034002C63B1 /* BasePersistentProtocol.swift */; };
 		AB9749BD28E0413F002C63B1 /* PersistentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9749BC28E0413F002C63B1 /* PersistentManager.swift */; };
 		AB9749BF28E04B8E002C63B1 /* DetailsServiceWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9749BE28E04B8E002C63B1 /* DetailsServiceWorker.swift */; };
-		AB9749C928E06D25002C63B1 /* Starred.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB9749C128E06D25002C63B1 /* Starred.storyboard */; };
 		AB9749CA28E06D25002C63B1 /* StarredFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9749C228E06D25002C63B1 /* StarredFactory.swift */; };
 		AB9749CB28E06D25002C63B1 /* StarredPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9749C328E06D25002C63B1 /* StarredPresenter.swift */; };
 		AB9749CC28E06D25002C63B1 /* StarredWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9749C428E06D25002C63B1 /* StarredWorker.swift */; };
@@ -27,6 +26,8 @@
 		AB9749CE28E06D25002C63B1 /* StarredModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9749C628E06D25002C63B1 /* StarredModels.swift */; };
 		AB9749CF28E06D25002C63B1 /* StarredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9749C728E06D25002C63B1 /* StarredViewController.swift */; };
 		AB9749D028E06D25002C63B1 /* StarredInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9749C828E06D25002C63B1 /* StarredInteractor.swift */; };
+		ABA9C98428E0EB99002A1DFC /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9C98328E0EB99002A1DFC /* NetworkError.swift */; };
+		ABA9C98628E0EEA8002A1DFC /* CustomPlaceHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9C98528E0EEA8002A1DFC /* CustomPlaceHolder.swift */; };
 		ABB7A11F28E0921900921E62 /* DetailsPageConstraintHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB7A11E28E0921900921E62 /* DetailsPageConstraintHelper.swift */; };
 		ABB7A12128E0B3BB00921E62 /* UIDeviceExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB7A12028E0B3BB00921E62 /* UIDeviceExtentions.swift */; };
 		ABCC403228DCAAE50014B7E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC403128DCAAE50014B7E6 /* AppDelegate.swift */; };
@@ -72,7 +73,6 @@
 		AB9749BA28E04034002C63B1 /* BasePersistentProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePersistentProtocol.swift; sourceTree = "<group>"; };
 		AB9749BC28E0413F002C63B1 /* PersistentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentManager.swift; sourceTree = "<group>"; };
 		AB9749BE28E04B8E002C63B1 /* DetailsServiceWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsServiceWorker.swift; sourceTree = "<group>"; };
-		AB9749C128E06D25002C63B1 /* Starred.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Starred.storyboard; sourceTree = "<group>"; };
 		AB9749C228E06D25002C63B1 /* StarredFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarredFactory.swift; sourceTree = "<group>"; };
 		AB9749C328E06D25002C63B1 /* StarredPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarredPresenter.swift; sourceTree = "<group>"; };
 		AB9749C428E06D25002C63B1 /* StarredWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarredWorker.swift; sourceTree = "<group>"; };
@@ -80,6 +80,8 @@
 		AB9749C628E06D25002C63B1 /* StarredModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarredModels.swift; sourceTree = "<group>"; };
 		AB9749C728E06D25002C63B1 /* StarredViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarredViewController.swift; sourceTree = "<group>"; };
 		AB9749C828E06D25002C63B1 /* StarredInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarredInteractor.swift; sourceTree = "<group>"; };
+		ABA9C98328E0EB99002A1DFC /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		ABA9C98528E0EEA8002A1DFC /* CustomPlaceHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPlaceHolder.swift; sourceTree = "<group>"; };
 		ABB7A11E28E0921900921E62 /* DetailsPageConstraintHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsPageConstraintHelper.swift; sourceTree = "<group>"; };
 		ABB7A12028E0B3BB00921E62 /* UIDeviceExtentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtentions.swift; sourceTree = "<group>"; };
 		ABCC402E28DCAAE50014B7E6 /* Repository_Database.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Repository_Database.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,6 +132,7 @@
 			children = (
 				AB9749B628E03F22002C63B1 /* Core Data */,
 				AB8A3C0928DDA9F000FF6457 /* NetworkManager.swift */,
+				ABA9C98328E0EB99002A1DFC /* NetworkError.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -164,7 +167,6 @@
 		AB9749C028E06CFA002C63B1 /* Starred */ = {
 			isa = PBXGroup;
 			children = (
-				AB9749C128E06D25002C63B1 /* Starred.storyboard */,
 				AB9749C728E06D25002C63B1 /* StarredViewController.swift */,
 				AB9749C828E06D25002C63B1 /* StarredInteractor.swift */,
 				AB9749C328E06D25002C63B1 /* StarredPresenter.swift */,
@@ -279,6 +281,7 @@
 				ABCC406828DCD2B50014B7E6 /* ConstraintHelper.swift */,
 				ABCC405C28DCB7F50014B7E6 /* SFSymbol.swift */,
 				AB02949628DF9C150071402A /* CustomAlert.swift */,
+				ABA9C98528E0EEA8002A1DFC /* CustomPlaceHolder.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -387,7 +390,6 @@
 			files = (
 				ABCC403E28DCAAE50014B7E6 /* LaunchScreen.storyboard in Resources */,
 				ABCC403B28DCAAE50014B7E6 /* Assets.xcassets in Resources */,
-				AB9749C928E06D25002C63B1 /* Starred.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,6 +407,7 @@
 				ABCC406428DCC4500014B7E6 /* UIColorExtensions.swift in Sources */,
 				ABCC405B28DCB6FD0014B7E6 /* Constants.swift in Sources */,
 				AB9749CF28E06D25002C63B1 /* StarredViewController.swift in Sources */,
+				ABA9C98628E0EEA8002A1DFC /* CustomPlaceHolder.swift in Sources */,
 				ABF6B4A028DF20520027BEE3 /* UIViewControllerExtentions.swift in Sources */,
 				AB9749CB28E06D25002C63B1 /* StarredPresenter.swift in Sources */,
 				ABF6B4AF28DF45530027BEE3 /* DetailsModels.swift in Sources */,
@@ -431,6 +434,7 @@
 				ABF6B4B128DF45530027BEE3 /* DetailsInteractor.swift in Sources */,
 				ABF6B4AC28DF45530027BEE3 /* DetailsPresenter.swift in Sources */,
 				ABF6B4AD28DF45530027BEE3 /* DetailsWorker.swift in Sources */,
+				ABA9C98428E0EB99002A1DFC /* NetworkError.swift in Sources */,
 				ABCC403428DCAAE50014B7E6 /* SceneDelegate.swift in Sources */,
 				ABF6B4B028DF45530027BEE3 /* DetailsViewController.swift in Sources */,
 				AB9749BF28E04B8E002C63B1 /* DetailsServiceWorker.swift in Sources */,

@@ -14,3 +14,13 @@ struct Constants {
     static let starredTitle = "Starred"
     
 }
+
+
+extension Constants {
+    
+    static let noInternet = "No Internet Connection"
+    static let userDoesNotExist = "User does not exist"
+    
+    static let searchRepositories = "Search Repositories"
+    static let noStarredRepositories = "You have no starred Repositories"
+}

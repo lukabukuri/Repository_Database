@@ -14,7 +14,15 @@ final class NetworkManager {
     static let shared = NetworkManager()
     
     func fetch<T: Decodable>(url: URL) async throws -> T {
-        let (data, response) = try await URLSession.shared.data(from: url)
+        
+        var data: Data
+        var response: URLResponse
+        
+        do {
+            (data, response) = try await URLSession.shared.data(from: url)
+        } catch {
+            throw NetworkError.noInternet
+        }
         
         guard (response as? HTTPURLResponse)?.statusCode == 200 else {
             throw NetworkError.badResponse
@@ -28,6 +36,3 @@ final class NetworkManager {
     }
 }
 
-enum NetworkError: Error {
-    case badURL, badResponse, errorDecodingData, invalidURL
-}

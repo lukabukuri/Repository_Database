@@ -34,17 +34,14 @@ extension StarredPresenter: StarredPresentationLogic {
     }
     
     private func present(repositories: [Repository]) {
+        var userRepositories = [UserRepository]()
         
-        
-            var userRepositories = [UserRepository]()
-            
-            for repository in repositories {
-                userRepositories.append(UserRepository(
-                    repositoryName: repository.repositoryName,
-                    owner: Owner(userName: repository.owner?.userName),
-                    image: repository.profileImage))}
-            self.displayLogic?.display(viewModel: .repositories(userRepositories))
-        
+        for repository in repositories {
+            userRepositories.append(UserRepository(
+                repositoryName: repository.repositoryName,
+                owner: Owner(userName: repository.owner?.userName),
+                image: repository.profileImage))}
+        self.displayLogic?.display(viewModel: .repositories(userRepositories))
     }
     
     private func present(error: Error) {

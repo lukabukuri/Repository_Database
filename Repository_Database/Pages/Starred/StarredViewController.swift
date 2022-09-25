@@ -99,14 +99,22 @@ extension StarredViewController: StarredDisplayLogic {
     
     private func display(userRepositories: [UserRepository]) {
         self.dataSource = userRepositories
+        showDefaultPlaceHolder()
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
         }
     }
 
     private func display(error: Error) {
-//        self.displayActivityIndicator(shouldDisplay: false)
-//        self.present(alert: CustomAlert(title: nil, message: error.localizedDescription, action: [.cancel(handler: nil)]))
+        showDefaultPlaceHolder()
+    }
+    
+    private func showDefaultPlaceHolder() {
+        if dataSource.isEmpty {
+            self.tableView.defaultPlaceHolder(show: true, status: (DefaultPlaceHolder.emptyFavorites) as CustomPlaceHolder)
+        } else {
+            self.tableView.defaultPlaceHolder(show: false)
+        }
     }
 
 }

@@ -149,9 +149,6 @@ extension DetailsViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
-//        print(paths[0])
-        
         self.configureUI()
         self.makeConstraints()
         self.interactor.process(request: .viewDidLoad)
